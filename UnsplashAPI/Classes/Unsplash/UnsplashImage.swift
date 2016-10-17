@@ -190,7 +190,7 @@ open class UnsplashImage {
         // Seperate into components to remove the time zone
         let components = string.components(separatedBy: "-")
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'hh:mm:ss"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         
         // Unsplash API returns times in GMT-4
         let timeZoneComponents = components[3].components(separatedBy: ":")
