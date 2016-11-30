@@ -12,8 +12,7 @@
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
- */
-
+*/
 
 import UIKit
 
@@ -38,8 +37,8 @@ struct ImageMetadata {
 }
 
 struct UserInformation {
-    var id: String?
-    var username: String?
+    var id: String!
+    var username: String!
     var name: String?
     var profile_image = ProfileImages()
     var links = UserLinks()
@@ -52,25 +51,25 @@ struct ProfileImages {
 }
 
 struct UserLinks {
-    var link: URL?
-    var html: URL?
+    var link: URL!
+    var html: URL!
     var photos: URL?
     var likes: URL?
 }
 
 struct PhotoUrls {
-    var raw: URL?
-    var full: URL?
-    var regular: URL?
-    var small: URL?
-    var thumb: URL?
+    var raw: URL!
+    var full: URL!
+    var regular: URL!
+    var small: URL!
+    var thumb: URL!
     var custom: URL?
 }
 
 struct PhotoLinks {
-    var link: URL?
-    var html: URL?
-    var download: URL?
+    var link: URL!
+    var html: URL!
+    var download: URL!
 }
 
 /**
@@ -85,14 +84,14 @@ open class UnsplashImage {
     public let id: String!
     
     /// Upload date of image
-    public let created_at: Date?
+    public let created_at: Date!
     
     /// Resolution of image
     public let width: Int!
     public let height: Int!
     
     /// Overall color of image
-    public let color: UIColor?
+    public let color: UIColor!
     
     /// Number of downloads of image from Unsplash
     public let downloads: Int?
@@ -186,20 +185,8 @@ open class UnsplashImage {
         }
         
         // Date
-        let string = json["created_at"] as! String
-        // Seperate into components to remove the time zone
-        let components = string.components(separatedBy: "-")
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        let date = json["created_at"] as! String
         
-        // Unsplash API returns times in GMT-4
-        let timeZoneComponents = components[3].components(separatedBy: ":")
-        let tz = TimeZone(identifier: "GMT-\(timeZoneComponents.first!)\(timeZoneComponents.last!)")
-        formatter.timeZone = tz
-        
-        // Strip away the time zone and create the Date
-        let date = formatter.date(from: "\(components[0])-\(components[1])-\(components[2])")
-        
-        self.created_at = date
+        self.created_at = date.toDate()
     }
 }
