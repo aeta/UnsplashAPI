@@ -17,8 +17,8 @@
 import Foundation
 
 extension String {
-    /// - IMPORTANT: String format must be: YYYY-MM-DD\THH:MM:SS\Z
-    func toDate() -> Date {
+    /// - IMPORTANT: String format must be: ``YYYY-MM-DD'T'HH:MM:SS'Z'``
+    func toDate() -> Date?  {
         // Seperate into components to remove the time zone
         let components = self.components(separatedBy: "-")
         let formatter = DateFormatter()
@@ -26,11 +26,11 @@ extension String {
         
         // Unsplash API returns times in GMT-4
         let timeZoneComponents = components[3].components(separatedBy: ":")
-        let tz = TimeZone(identifier: "GMT-\(timeZoneComponents.first!)\(timeZoneComponents.last!)")
+        let tz = TimeZone(identifier: "GMT-\(timeZoneComponents.first ?? "00")\(timeZoneComponents.last ?? "00")")
         formatter.timeZone = tz
         
         let date = formatter.date(from: "\(components[0])-\(components[1])-\(components[2])")
         
-        return date!
+        return date
     }
 }

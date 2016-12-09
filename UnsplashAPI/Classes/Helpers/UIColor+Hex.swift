@@ -17,7 +17,7 @@
 import UIKit
 
 extension UIColor {
-    convenience init(hex: String) {
+    convenience init?(hex: String) {
         var red:   CGFloat = 0.0
         var green: CGFloat = 0.0
         var blue:  CGFloat = 0.0
@@ -49,18 +49,14 @@ extension UIColor {
                     blue  = CGFloat((hexValue & 0x0000FF00) >> 8)  / 255.0
                     alpha = CGFloat(hexValue & 0x000000FF)         / 255.0
                 default:
-                    print("RGB: Invalid RGB string, number of characters after '#' should be either 3, 4, 6 or 8")
+                    return nil
                 }
             } else {
-                print("RGB: Scan hex error")
+                return nil
             }
         } else {
-            print("RGB: Provided string has no # prefix, initializing as white color")
-            red = 1
-            green = 1
-            blue = 1
-            alpha = 1
+            return nil
         }
-        self.init(red:red, green:green, blue:blue, alpha:alpha)
+        self.init(red: red, green: green, blue: blue, alpha: alpha)
     }
 }
